@@ -3,17 +3,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by henri on 10/15/2016.
- */
-public class FilterIteratorTest {
+public class FilteredIteratorTest {
 
     private String[] array = {"a", "b", "c", "d"};
     private Stream<String> filtered;
@@ -49,6 +43,23 @@ public class FilterIteratorTest {
         assertFalse(it.hasNext());
         assertFalse(it.hasNext());
 //        new ArrayList<String>().stream().
+    }
+
+    @Test
+    public void testSingle() {
+        LinkedList<String> strings = new LinkedList<>();
+        strings.add("a");
+        strings.add("a");
+        Assert.assertArrayEquals(new String[]{"a"}, Stream.of(strings).distinct().toArray());
+        strings.add("a");
+        Assert.assertArrayEquals(new String[]{"a"}, Stream.of(strings).distinct().toArray());
+    }
+
+    @Test
+    public void testMultiple() {
+        String[] strings = {"a", "c", "a", "d", "c"};
+        Assert.assertArrayEquals(new String[]{"a", "c", "d"}, Stream.of(strings).distinct().toArray());
+
     }
 
 }
